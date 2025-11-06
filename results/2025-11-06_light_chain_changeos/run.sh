@@ -8,11 +8,8 @@ function download_changeo {
 }
 
 function split_file {
-	for chain in IGK IGL
-do
-	awk -v -s=${chain} '{if ($?? == s) print $0}' > ${chain}.tsv
-done
+	module load python
+       python run.py	
 }
-
 
 split_file
