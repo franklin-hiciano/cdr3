@@ -1,0 +1,35 @@
+/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py:8: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(args.changeo, sep='\t')
+Traceback (most recent call last):
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 34, in <module>
+    main()
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 31, in main
+    process_changeo(args)
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 14, in process_changeo
+    (int(df["v_identity"]) >= args.v_identity) &
+     ^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/packages/minerva-rocky9/py_packages/3.12/lib/python3.12/site-packages/pandas/core/series.py", line 248, in wrapper
+    raise TypeError(f"cannot convert the series to {converter}")
+TypeError: cannot convert the series to <class 'int'>
+Traceback (most recent call last):
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 35, in <module>
+    main()
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 32, in main
+    process_changeo(args)
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 15, in process_changeo
+    (int(df["v_identity"]) >= args.v_identity) &
+     ^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/packages/minerva-rocky9/py_packages/3.12/lib/python3.12/site-packages/pandas/core/series.py", line 248, in wrapper
+    raise TypeError(f"cannot convert the series to {converter}")
+TypeError: cannot convert the series to <class 'int'>
+Traceback (most recent call last):
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 35, in <module>
+    main()
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 32, in main
+    process_changeo(args)
+  File "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py", line 15, in process_changeo
+    (int(df["v_identity"]) >= args.v_identity) &
+     ^^^^^^^^^^^^^^^^^^^^^
+  File "/hpc/packages/minerva-rocky9/py_packages/3.12/lib/python3.12/site-packages/pandas/core/series.py", line 248, in wrapper
+    raise TypeError(f"cannot convert the series to {converter}")
+TypeError: cannot convert the series to <class 'int'>
