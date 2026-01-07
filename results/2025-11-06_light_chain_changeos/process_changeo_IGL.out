@@ -1,0 +1,98 @@
+Sender: LSF System <lsfadmin@lc06e34>
+Subject: Job 225268952: <process_changeo_IGL> in cluster <chimera> Done
+
+Job <process_changeo_IGL> was submitted from host <li04e02> by user <hiciaf01> in cluster <chimera> at Tue Jan  6 17:28:06 2026
+Job was executed on host(s) <6*lc06e34>, in queue <express>, as user <hiciaf01> in cluster <chimera> at Tue Jan  6 17:28:11 2026
+</hpc/users/hiciaf01> was used as the home directory.
+</sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos> was used as the working directory.
+Started at Tue Jan  6 17:28:11 2026
+Terminated at Tue Jan  6 17:30:25 2026
+Results reported at Tue Jan  6 17:30:25 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+python process_changeo.py --changeo /sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos//changeo/master_changeo_2.deheader.tsv --locus IGL --v_identity 100 --j_identity 100 --outfile /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//IGL.tsv
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   96.35 sec.
+    Max Memory :                                 19567 MB
+    Average Memory :                             6391.29 MB
+    Total Requested Memory :                     36000.00 MB
+    Delta Memory :                               16433.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                26
+    Run time :                                   134 sec.
+    Turnaround time :                            139 sec.
+
+The output (if any) follows:
+
+          sample_id  ... clone_id
+0            RG1083  ...        1
+1            RG1083  ...        2
+2            RG1083  ...        3
+3            RG1083  ...        4
+4            RG1083  ...        5
+...             ...  ...      ...
+3173237  SCT9160998  ...    21620
+3173238  SCT9160998  ...    21621
+3173239  SCT9160998  ...    21622
+3173240  SCT9160998  ...    21624
+3173241  SCT9160998  ...    21625
+
+[3173242 rows x 113 columns]
+          sample_id  ... clone_id
+96935     888179544  ...      854
+260871    110042935  ...    38364
+698228    888436895  ...    15048
+698229    888436895  ...    15048
+1173294   CE0005779  ...    19611
+1210090   CE0005786  ...    31339
+1210091   CE0005786  ...    31339
+1306376   CE0006103  ...    37098
+1810677   CE0007865  ...    44064
+2127862      RG1272  ...    39637
+2429108      RG2037  ...    17213
+2743685      RG3309  ...     5809
+2743686      RG3309  ...     5809
+2751321      RG3309  ...    14942
+2847952      RG3758  ...    25798
+3052358  SCT2601343  ...    23032
+
+[16 rows x 113 columns]
+          sample_id  ... clone_id
+96935     888179544  ...      854
+260871    110042935  ...    38364
+698228    888436895  ...    15048
+698229    888436895  ...    15048
+1173294   CE0005779  ...    19611
+1210090   CE0005786  ...    31339
+1210091   CE0005786  ...    31339
+1306376   CE0006103  ...    37098
+1810677   CE0007865  ...    44064
+2127862      RG1272  ...    39637
+2429108      RG2037  ...    17213
+2743685      RG3309  ...     5809
+2743686      RG3309  ...     5809
+2751321      RG3309  ...    14942
+2847952      RG3758  ...    25798
+3052358  SCT2601343  ...    23032
+
+[16 rows x 113 columns]
+Empty DataFrame
+Columns: [sample_id, sequence_id, sequence, rev_comp, productive, v_call, d_call, j_call, sequence_alignment, germline_alignment, junction, junction_aa, v_cigar, d_cigar, j_cigar, sequence_aa, locus, stop_codon, vj_in_frame, v_frameshift, complete_vdj, d_frame, c_call, sequence_alignment_aa, germline_alignment_aa, v_alignment_start, v_alignment_end, d_alignment_start, d_alignment_end, j_alignment_start, j_alignment_end, c_alignment_start, c_alignment_end, v_sequence_alignment, v_sequence_alignment_aa, v_germline_alignment, v_germline_alignment_aa, d_sequence_alignment, d_sequence_alignment_aa, d_germline_alignment, d_germline_alignment_aa, j_sequence_alignment, j_sequence_alignment_aa, j_germline_alignment, j_germline_alignment_aa, c_sequence_alignment, c_sequence_alignment_aa, c_germline_alignment, c_germline_alignment_aa, fwr1, fwr1_aa, cdr1, cdr1_aa, fwr2, fwr2_aa, cdr2, cdr2_aa, fwr3, fwr3_aa, fwr4, fwr4_aa, cdr3, cdr3_aa, junction_length, junction_aa_length, v_score, d_score, j_score, c_score, c_cigar, v_support, d_support, j_support, c_support, v_identity, d_identity, j_identity, c_identity, v_sequence_start, v_sequence_end, v_germline_start, v_germline_end, d_sequence_start, d_sequence_end, d_germline_start, d_germline_end, j_sequence_start, j_sequence_end, j_germline_start, j_germline_end, c_sequence_start, c_sequence_end, c_germline_start, c_germline_end, fwr1_start, fwr1_end, cdr1_start, cdr1_end, fwr2_start, fwr2_end, ...]
+Index: []
+
+[0 rows x 113 columns]
+
+
+PS:
+
+Read file <process_changeo_IGL.err> for stderr output of this job.
+

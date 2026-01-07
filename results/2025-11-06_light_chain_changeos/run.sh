@@ -34,5 +34,13 @@ do
 done
 }
 
+function validate_process_changeo_results_using_bash {
+	for locus in IGK IGL
+do
+	cat $DATA//changeo/master_changeo_2.deheader.tsv | cut -f5,17,75,77 | grep "${locus}"
+done
+}
+
 #changeo_subset
-process_changeo
+#process_changeo
+validate_process_changeo_results_using_bash
