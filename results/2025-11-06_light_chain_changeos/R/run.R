@@ -2,7 +2,7 @@ library(tidyverse)
 
 CHANGEO_DIR <- ("/sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos/changeo/")
 
-plot_clones < function() {
+plot_clones <- function() {
   changeo_IGK <- read.csv(paste0(CHANGEO_DIR, "IGK", "/", "master_changeo_unmutated_500_seqs_filtered_productive.tsv"), sep='\t')
   changeo_IGL <- read.csv(paste0(CHANGEO_DIR, "IGL", "/", "master_changeo_unmutated_500_seqs_filtered_productive.tsv"), sep='\t')
 
