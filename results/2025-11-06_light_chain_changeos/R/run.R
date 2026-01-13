@@ -1,6 +1,3 @@
-library(readr)
-library(dplyr)
-library(ggplot2)
 library(tidyverse)
 
 CHANGEO_DIR <- ("/sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos/changeo/")
