@@ -13,7 +13,7 @@ plot_clones <- function() {
         clone_counts <- read.table(file.path(RESULTS, paste0("/R/count_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
         p <- ggplot(clone_counts, aes(x="", y=unique_clones)) +
           geom_boxplot(outlier.shape=NA) + 
-          labs(title=paste0("Clone counts for ", locus), subtitle=paste0(str_to_title(SHM_status), ", ", functional, " clones")) +
+          labs(title=paste0("Clone counts for ", locus), subtitle=paste0(str_to_title(SHM_status), ", ", functional, " clones"), caption=paste0("n = ", nrow(clone_counts), ", mean = ", round(mean(clone_counts$unique_clones)))) +
           geom_jitter(width=0.1, size = 2) +
           theme_minimal() +
           labs(x="Samples", y="Number of unique clones")
@@ -32,7 +32,7 @@ plot_summed_clone_counts <- function() {
     clone_counts <- read.table(file.path(RESULTS, paste0("/R/count_clones/summed_clone_counts_", locus, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
     p <- ggplot(clone_counts, aes(x="", y=unique_clones)) +
       geom_boxplot(outlier.shape=NA) + 
-      labs(title=paste0("Clone counts for ", locus), caption="Mutated, unmutated, productive, and unproductive") +
+      labs(title=paste0("Clone counts for ", locus), caption=paste0("n = ", nrow(clone_counts), ", mean = ", round(mean(clone_counts$unique_clones)))) +
       geom_jitter(width=0.1, size = 2) +
       theme_minimal() +
       labs(x="Samples", y="Number of unique clones")
