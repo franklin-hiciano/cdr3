@@ -41,6 +41,34 @@ do
 done
 }
 
+function count_clones {
+  module load R
+  mkdir -p "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones"
+	for locus in IGK IGL
+do
+	for SHM_status in mutated unmutated
+	do
+		for functional in productive unproductive
+		do
+
+  job_name="count_clones"
+	bsub \
+	-P acc_oscarlr \
+    	-q express \
+    	-W 01:00 \
+    	-n 4 \
+    	-J "${job_name}" \
+    	-R "span[hosts=1]" \
+    	-R "rusage[mem=8000]" \
+    	-o "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/count_clones.out" \
+    	-e "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/count_clones.%J.err" \
+    	"module load R; Rscript ${SCRIPT} ${CHANGEO_DIR} ${OUT_DIR} ${locus} ${SHM_status} ${functional}"
+done
+done
+done
+}
+
+
 #changeo_subset
 #process_changeo
 validate_process_changeo_results_using_bash
