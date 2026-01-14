@@ -44,6 +44,7 @@ done
 function count_clones {
   	module load R
 	mkdir -p "${RESULTS}/R/count_clones/"
+	mkdir -p "${RESULTS}/R/count_clones/logs"
 	for locus in IGK IGL
 do
 	for SHM_status in mutated unmutated
@@ -60,8 +61,8 @@ do
     				-J "${job_name}" \
     				-R "span[hosts=1]" \
     				-R "rusage[mem=16000]" \
-    				-o "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/${job_name}.out" \
-    				-e "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/${job_name}.err" \
+    				-o "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/logs/${job_name}.out" \
+    				-e "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/logs/${job_name}.err" \
     				"module load R; Rscript ${RESULTS}/R/count_clones.R ${DATA}/changeo/${locus}/master_changeo_${SHM_status}_500_seqs_filtered_${functional}.tsv ${RESULTS}/R/count_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv"
 		done
 	done
