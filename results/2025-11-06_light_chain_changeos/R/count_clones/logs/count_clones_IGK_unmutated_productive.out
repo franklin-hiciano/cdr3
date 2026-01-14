@@ -121,3 +121,44 @@ PS:
 
 Read file </sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/count_clones_IGK_unmutated_productive.err> for stderr output of this job.
 
+Sender: LSF System <lsfadmin@lc07e48>
+Subject: Job 225986533: <count_clones_IGK_unmutated_productive> in cluster <chimera> Done
+
+Job <count_clones_IGK_unmutated_productive> was submitted from host <li04e01> by user <hiciaf01> in cluster <chimera> at Wed Jan 14 16:36:30 2026
+Job was executed on host(s) <lc07e48>, in queue <express>, as user <hiciaf01> in cluster <chimera> at Wed Jan 14 16:36:34 2026
+</hpc/users/hiciaf01> was used as the home directory.
+</sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos> was used as the working directory.
+Started at Wed Jan 14 16:36:34 2026
+Terminated at Wed Jan 14 16:38:03 2026
+Results reported at Wed Jan 14 16:38:03 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+module load R; Rscript /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_clones.R /sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos//changeo/IGK/master_changeo_unmutated_500_seqs_filtered_productive.tsv /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_clones/clone_counts_IGK_unmutated_productive.tsv
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   88.08 sec.
+    Max Memory :                                 3270 MB
+    Average Memory :                             1467.29 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               12730.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                5
+    Run time :                                   89 sec.
+    Turnaround time :                            93 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file </sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/logs/count_clones_IGK_unmutated_productive.err> for stderr output of this job.
+
