@@ -1,2 +1,0 @@
-/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/process_changeo.py:8: DtypeWarning: Columns (0) have mixed types. Specify dtype option on import or set low_memory=False.
-  df = pd.read_csv(args.changeo, sep='\t')
