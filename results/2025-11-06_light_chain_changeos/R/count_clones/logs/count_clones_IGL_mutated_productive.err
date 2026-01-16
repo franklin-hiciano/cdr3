@@ -1,0 +1,4 @@
+Error: unexpected '{' in:
+"  changeo <- read.table(file.path(CHANGEO), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
+  clone_counts <- data.frame {"
+Execution halted

@@ -63,7 +63,7 @@ do
     				-R "rusage[mem=16000]" \
     				-o "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/logs/${job_name}.out" \
     				-e "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/R/count_clones/logs/${job_name}.err" \
-    				"module load R; Rscript ${RESULTS}/R/count_clones.R ${DATA}/changeo/${locus}/master_changeo_${SHM_status}_500_seqs_filtered_${functional}.tsv ${RESULTS}/R/count_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv"
+    				"module load R; Rscript ${RESULTS}/R/count_clones.R distinct ${DATA}/changeo/${locus}/master_changeo_${SHM_status}_500_seqs_filtered_${functional}.tsv ${RESULTS}/R/count_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv"
 		done
 	done
 done
@@ -86,10 +86,57 @@ do
 done
 }
 
+function count_all_clones {
+        module load R
+        mkdir -p "${RESULTS}/R/count_all_clones/"
+        mkdir -p "${RESULTS}/R/count_all_clones/logs"
+        for locus in IGK IGL
+do
+        for SHM_status in mutated unmutated
+        do
+                for functional in productive unproductive
+                do
+
+                        job_name="count_all_clones_${locus}_${SHM_status}_${functional}"
+                        bsub \
+                                -P acc_oscarlr \
+                                -q express \
+                                -W 01:00 \
+                                -n 1 \
+                                -J "${job_name}" \
+                                -R "span[hosts=1]" \
+                                -R "rusage[mem=16000]" \
+                                -o "${RESULTS}/R/count_all_clones/logs/${job_name}.out" \
+                                -e "${RESULTS}/R/count_all_clones/logs/${job_name}.err" \
+                                "module load R; Rscript ${RESULTS}/R/count_clones.R all ${DATA}/changeo/${locus}/master_changeo_${SHM_status}_500_seqs_filtered_${functional}.tsv ${RESULTS}/R/count_all_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv"
+                done
+        done
+done
+}
+
+function sum_all_clones {
+        printf "sample_id\tunique_clones"
+        for locus in IGK IGL
+do
+        clone_counts_tables=()
+        for SHM_status in mutated unmutated
+        do
+                for functional in productive unproductive
+                do
+                        clone_counts_tables+=("${RESULTS}/R/count_all_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv")
+                done
+        done
+        printf "sample_id\tunique_clones\n" > "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
+	awk 'FNR > 1 {count=$1; sum+=count; print("HI")} END{print sum} ' "${clone_counts_tables[@]}" | sort -k1,1 >> "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
+done
+}
 
 
 #changeo_subset
 #process_changeo
 #validate_process_changeo_results_using_bash
 #count_clones
-sum_clones
+#sum_clones
+
+#count_all_clones
+#sum_all_clones

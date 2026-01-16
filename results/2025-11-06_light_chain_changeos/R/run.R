@@ -3,6 +3,7 @@ library(stringr)
 library(patchwork)
 
 RESULTS <- "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos/"
+DATA <- "/sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos/"
 
 #REQUIRED FUNCTIONS: count_clones in run.sh
 plot_clones <- function() {
@@ -42,7 +43,6 @@ plot_summed_clone_counts <- function() {
 
 plot_summed_clone_counts()
 
-
 get_means_of_clone_counts <- function() {
   means <- c()
   for (locus in c("IGK", "IGL")) {
@@ -56,4 +56,31 @@ get_means_of_clone_counts <- function() {
   write.table(clone_count_means, file.path(RESULTS, "R/count_clones/", "summed_clone_count_means.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 }
 
-get_means_of_clone_counts()
+plot_all_sequence_counts <- function() {
+  all_counts <- data.frame()  
+  for (locus in c("IGK", "IGL")) {
+    for (SHM_status in c("mutated", "unmutated")) {
+      for (functional in c("productive", "unproductive")) {
+        file <- read.table(file.path(RESULTS, paste0("R/count_all_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
+        v <- as.numeric(unlist(file))
+        all_counts <- rbind(all_counts, data.frame(
+          name = paste(str_to_title(SHM_status), functional),
+          count = v[!is.na(v)][1]
+        ))
+      }
+    }
+    png(
+      filename = file.path(RESULTS, paste0("R/plots/count_all_clones/counts_", locus, ".png")),
+      width = dev.size("in")[1], height = dev.size("in")[2], units = "in",
+      res=300
+    )
+    p <- ggplot(all_counts, aes(x=name, y=count, fill = name)) +
+      geom_col() + 
+      labs(title=paste0("Number of B cells in ", locus, " changeo files "), caption=paste0(prettyNum(sum(all_counts$count), big.mark = ",", scientific = FALSE), " total cells")) +
+      theme_minimal() +
+      theme(legend.position = "none") +
+      labs(x="Files", y="Number of B cells", fill = "")
+    print(p)
+  }
+}
+plot_all_sequence_counts()
