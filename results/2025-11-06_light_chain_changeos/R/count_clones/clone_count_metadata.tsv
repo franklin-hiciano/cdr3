@@ -1,0 +1,9 @@
+locus	SHM_status	functional	n_samples	mean_unique_clones	rounded_mean_unique_clones	sum_unique_clones
+IGK	mutated	productive	169	9254.67455621302	9255	1564040
+IGK	mutated	unproductive	169	716.863905325444	717	121150
+IGK	unmutated	productive	169	4900.81656804734	4901	828238
+IGK	unmutated	unproductive	169	781.473372781065	781	132069
+IGL	mutated	productive	169	3867.5798816568	3868	653621
+IGL	mutated	unproductive	169	397.745562130178	398	67219
+IGL	unmutated	productive	169	1841.59763313609	1842	311230
+IGL	unmutated	unproductive	169	279.343195266272	279	47209
