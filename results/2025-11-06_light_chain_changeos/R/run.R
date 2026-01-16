@@ -27,6 +27,32 @@ plot_clones <- function() {
 }
 plot_clones()
 
+get_files_info
+make_clone_count_metadata <- function() {
+  metadata <- data.frame()
+  for (locus in c("IGK", "IGL")) {
+    for (SHM_status in c("mutated", "unmutated")) {
+      for (functional in c("productive", "unproductive")) {
+        clone_counts <- read.table(file.path(RESULTS, paste0("/R/count_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
+        metadata <- rbind(metadata, data.frame(
+          locus = locus,
+          SHM_status = SHM_status,
+          functional = functional,
+          n_samples = nrow(clone_counts),
+          mean_unique_clones = mean(clone_counts$unique_clones),
+          rounded_mean_unique_clones = round(mean(clone_counts$unique_clones)),
+          sum_unique_clones = sum(clone_counts$unique_clones),
+          stringsAsFactors = FALSE
+        ))
+      }
+    }
+  }
+  write.table(metadata, file.path(RESULTS, "R/count_clones/", "clone_count_metadata.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
+}
+make_clone_count_metadata()
+
+summary(c(1, 2, 3, 4))
+
 #REQUIRED FUNCTIONS: sum_clones in run.sh
 plot_summed_clone_counts <- function() {
   for (locus in c("IGK", "IGL")) {
