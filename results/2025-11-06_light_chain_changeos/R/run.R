@@ -69,17 +69,19 @@ plot_all_sequence_counts <- function() {
         ))
       }
     }
+    
     png(
-      filename = file.path(RESULTS, paste0("R/plots/count_all_clones/counts_", locus, ".png")),
+      filename = file.path(RESULTS, paste0("R/plots/count_all_clones/plot_all_sequence_counts_", locus, ".png")),
       width = dev.size("in")[1], height = dev.size("in")[2], units = "in",
       res=300
     )
     p <- ggplot(all_counts, aes(x=name, y=count, fill = name)) +
       geom_col() + 
-      labs(title=paste0("Number of B cells in ", locus, " changeo files "), caption=paste0(prettyNum(sum(all_counts$count), big.mark = ",", scientific = FALSE), " total cells")) +
+      labs(title=paste0("Number of B cells in ", locus, " changeo files"), caption=paste0(prettyNum(sum(all_counts$count), big.mark = ",", scientific = FALSE), " total cells")) +
       theme_minimal() +
       theme(legend.position = "none") +
-      labs(x="Files", y="Number of B cells", fill = "")
+      labs(x="Files", y="Number of B cells", fill = "") +
+      scale_y_continuous("trans"="log10")
     print(p)
   }
 }
