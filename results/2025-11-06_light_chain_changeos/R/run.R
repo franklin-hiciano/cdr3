@@ -6,25 +6,43 @@ RESULTS <- "/sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain
 DATA <- "/sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos/"
 
 #REQUIRED FUNCTIONS: count_clones in run.sh
-plot_clones <- function() {
-  plots <- list()
+plot_distinct_clones <- function() {
   for (locus in c("IGK", "IGL")) {
+    plots <- list()
     for (SHM_status in c("mutated", "unmutated")) {
       for (functional in c("productive", "unproductive")) {
-        clone_counts <- read.table(file.path(RESULTS, paste0("/R/count_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
-        p <- ggplot(clone_counts, aes(x="", y=unique_clones)) +
-          geom_boxplot(outlier.shape=NA) + 
-          labs(title=paste0("Clone counts for ", locus), subtitle=paste0(prettyNum(sum(clone_counts$unique_clones), big.mark = ",", scientific = FALSE), " ", SHM_status, ", ", functional, " clones"), caption = paste0("n = ", nrow(clone_counts), ", mean = ", round(mean(clone_counts$unique_clones)))) +
+        clone_counts <- read.table(
+          file.path(RESULTS, paste0("/R/count_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")),
+          sep="\t", header=TRUE, stringsAsFactors=FALSE, quote="", comment.char=""
+        )
+        label <- paste(str_to_title(SHM_status), functional)
+        clone_counts$label <- label
+        p <- ggplot(clone_counts, aes(x = label, y = unique_clones)) +
+          geom_boxplot(outlier.shape=NA) +
+          geom_violin(alpha)
+          geom_jitter(width=0.1, size=2) +
           theme_minimal() +
-          geom_jitter(width = 0.1, size = 2) +
-          labs(x="Samples", y="Number of unique clones")
+          labs(title=NULL, subtitle=NULL, caption=NULL, x="Samples", y="Number of unique clones")
+        
         plots[[length(plots) + 1]] <- p
       }
     }
+    png(filename = file.path(RESULTS, paste0("R/plots/count_clones/plot_distinct_clones_", locus, ".png")), width = dev.size("in")[1], height = dev.size("in")[2], units = "in", res=300)
+    print(
+      wrap_plots(plots, ncol=4, nrow=1) +
+        plot_annotation(title = paste0("Clone counts for ", locus)) +
+        plot_layout(axes="collect")
+    )
+    dev.off()
   }
-  wrap_plots(plots, ncol=4, nrow=2) +
-    plot_layout(axes="collect")
 }
+plot_distinct_clones()
+
+specie <- c(rep("sorgho" , 3) , rep("poacee" , 3) , rep("banana" , 3) , rep("triticum" , 3) )
+condition <- rep(c("normal" , "stress" , "Nitrogen") , 4)
+value <- abs(rnorm(12 , 0 , 15))
+data <- data.frame(specie,condition,value)
+
 plot_clones()
 
 get_files_info
@@ -50,8 +68,6 @@ make_clone_count_metadata <- function() {
   write.table(metadata, file.path(RESULTS, "R/count_clones/", "clone_count_metadata.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 }
 make_clone_count_metadata()
-
-summary(c(1, 2, 3, 4))
 
 #REQUIRED FUNCTIONS: sum_clones in run.sh
 plot_summed_clone_counts <- function() {
@@ -83,29 +99,37 @@ get_means_of_clone_counts <- function() {
 }
 
 plot_all_sequence_counts <- function() {
-  all_counts <- data.frame()  
   for (locus in c("IGK", "IGL")) {
+    all_counts <- data.frame()
     for (SHM_status in c("mutated", "unmutated")) {
       for (functional in c("productive", "unproductive")) {
-        file <- read.table(file.path(RESULTS, paste0("R/count_all_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
+        file <- read.table(file.path(RESULTS, paste0("R/count_clones/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
         v <- as.numeric(unlist(file))
+        print(file$sample_id)
+        
         all_counts <- rbind(all_counts, data.frame(
-          name = paste(str_to_title(SHM_status), functional),
-          count = v[!is.na(v)][1]
+          file = rep(paste(SHM_status, functional), times=length(ncol(file))),
+          sample_id = unlist(file$sample_id),
+          unique_clones = file$unique_clones
         ))
       }
     }
-    
-    png(filename = file.path(RESULTS, paste0("R/plots/count_all_clones/plot_all_sequence_counts_", locus, ".png")), width = dev.size("in")[1], height = dev.size("in")[2], units = "in", res=300)
-    p <- ggplot(all_counts, aes(x=name, y=count, fill = name)) +
-      geom_col() + 
-      labs(title=paste0("Number of B cells in ", locus, " changeo files"), caption=paste0(prettyNum(sum(all_counts$count), big.mark = ",", scientific = FALSE), " total cells")) +
+    all_counts <- all_counts %>%
+      group_by(sample_id) %>%
+      mutate(total_clones = sum(unique_clones)) %>%
+      ungroup() %>%
+      arrange(total_clones) %>%
+      mutate(sample_id = factor(sample_id, levels = unique(sample_id)))
+    p <- ggplot(all_counts, aes(fill=file, y=unique_clones, x=sample_id)) + 
+      geom_bar(position="stack", stat="identity") +
       theme_minimal() +
-      theme(legend.position = "none") +
-      labs(x="Files", y="Number of B cells", fill = "")
-    
+      theme(legend.position = "top", legend.justification = "right",
+            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7)) +
+      labs(title = paste0("Distinct clone counts per ", locus, " sample"), x="Sample", y="Number of unique clones")
+    png(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot", ".png")), width = dev.size("in")[1], height = dev.size("in")[2], units = "in", res=300)
     print(p)
     dev.off()
   }
+  
 }
 plot_all_sequence_counts()
