@@ -124,11 +124,16 @@ plot_all_sequence_counts <- function() {
       geom_bar(position="stack", stat="identity") +
       theme_minimal() +
       theme(legend.position = "top", legend.justification = "right",
-            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 7)) +
-      labs(title = paste0("Distinct clone counts per ", locus, " sample"), x="Sample", y="Number of unique clones")
-    png(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot", ".png")), width = dev.size("in")[1], height = dev.size("in")[2], units = "in", res=300)
+            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
+      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
     print(p)
-    dev.off()
+    # Save with current device size
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot", ".png")), 
+           plot = p, 
+           width = dev.size("in")[1], 
+           height = dev.size("in")[2], 
+           units = "in", 
+           dpi = 600)
   }
   
 }
