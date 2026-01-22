@@ -149,7 +149,7 @@ plot_number_of_distinct_clones_per_sample <- function() {
             axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
       labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
     print(p)
-    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot_sorted", ".png")), 
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_distinct_clones_per_sample/plot_number_of_distinct_clones_per_sample_", locus, "_stacked_plot_sorted", ".png")), 
            plot = p, 
            width = dev.size("in")[1], 
            height = dev.size("in")[2], 
@@ -168,28 +168,28 @@ plot_number_of_B_cells_per_sample <- function() {
     for (SHM_status in c("mutated", "unmutated")) {
       for (functional in c("productive", "unproductive")) {
         file <- read.table(file.path(RESULTS, paste0("R/count_all_clones_per_sample/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
-        v <- as.numeric(unlist(file))
+        
         print(file$sample_id)
         
         all_counts <- rbind(all_counts, data.frame(
-          file = rep(paste(SHM_status, functional), times=length(ncol(file))),
-          sample_id = unlist(file$sample_id),
-          unique_clones = file$unique_clones
+          file = rep(paste(SHM_status, functional), times=nrow(file)),  # Changed: nrow(file) instead of length(ncol(file))
+          sample_id = file$sample_id,  # Changed: removed unlist()
+          total_clones = file$total_clones  # Changed: total_clones instead of unique_clones
         ))
       }
     }
     all_counts_unsorted <- all_counts %>%
       group_by(sample_id) %>%
-      mutate(total_clones = sum(unique_clones)) %>%
+      mutate(total_all_clones = sum(total_clones)) %>%  # Changed: renamed to avoid confusion
       ungroup() %>%
       mutate(sample_id = factor(sample_id, levels = unique(all_counts$sample_id)))
     
-    p <- ggplot(all_counts_unsorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
+    p <- ggplot(all_counts_unsorted, aes(fill=file, y=total_clones, x=sample_id)) +  # Changed: total_clones
       geom_bar(position="stack", stat="identity") +
       theme_minimal() +
       theme(legend.position = "top", legend.justification = "right",
             axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
-      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
+      labs(title = paste0("Number of B cells per ", locus, " sample"), x="Sample", y="Number of B cells")  # Changed: title/labels
     print(p)
     ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_B_cells_per_sample/plot_number_of_B_cells_per_sample_", locus, "_stacked_plot_unsorted", ".png")), 
            plot = p, 
@@ -201,17 +201,17 @@ plot_number_of_B_cells_per_sample <- function() {
     
     all_counts_sorted <- all_counts %>%
       group_by(sample_id) %>%
-      mutate(total_clones = sum(unique_clones)) %>%
+      mutate(total_all_clones = sum(total_clones)) %>%
       ungroup() %>%
-      arrange(total_clones) %>%
+      arrange(total_all_clones) %>%  # Changed: use the new column name
       mutate(sample_id = factor(sample_id, levels = unique(sample_id)))
     
-    p <- ggplot(all_counts_sorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
+    p <- ggplot(all_counts_sorted, aes(fill=file, y=total_clones, x=sample_id)) +  # Changed: total_clones
       geom_bar(position="stack", stat="identity") +
       theme_minimal() +
       theme(legend.position = "top", legend.justification = "right",
             axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
-      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
+      labs(title = paste0("Number of B cells per ", locus, " sample"), x="Sample", y="Number of B cells")  # Changed: title/labels
     print(p)
     ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_B_cells_per_sample/plot_number_of_B_cells_per_sample_", locus, "_stacked_plot_sorted", ".png")), 
            plot = p, 
@@ -221,6 +221,6 @@ plot_number_of_B_cells_per_sample <- function() {
            dpi = 600)
     
   }
-  
 }
+
 plot_number_of_B_cells_per_sample()
