@@ -114,26 +114,48 @@ plot_all_sequence_counts <- function() {
         ))
       }
     }
-    all_counts <- all_counts %>%
+    all_counts_unsorted <- all_counts %>%
       group_by(sample_id) %>%
       mutate(total_clones = sum(unique_clones)) %>%
       ungroup() %>%
-      arrange(total_clones) %>%
-      mutate(sample_id = factor(sample_id, levels = unique(sample_id)))
-    p <- ggplot(all_counts, aes(fill=file, y=unique_clones, x=sample_id)) + 
+      mutate(sample_id = factor(sample_id, levels = unique(all_counts$sample_id)))
+    
+    p <- ggplot(all_counts_unsorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
       geom_bar(position="stack", stat="identity") +
       theme_minimal() +
       theme(legend.position = "top", legend.justification = "right",
             axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
       labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
     print(p)
-    # Save with current device size
-    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot", ".png")), 
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot_unsorted", ".png")), 
            plot = p, 
            width = dev.size("in")[1], 
            height = dev.size("in")[2], 
            units = "in", 
            dpi = 600)
+    
+    
+    all_counts_sorted <- all_counts %>%
+      group_by(sample_id) %>%
+      mutate(total_clones = sum(unique_clones)) %>%
+      ungroup() %>%
+      arrange(total_clones) %>%
+      mutate(sample_id = factor(sample_id, levels = unique(sample_id)))
+    
+    p <- ggplot(all_counts_sorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
+      geom_bar(position="stack", stat="identity") +
+      theme_minimal() +
+      theme(legend.position = "top", legend.justification = "right",
+            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
+      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
+    print(p)
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot_sorted", ".png")), 
+           plot = p, 
+           width = dev.size("in")[1], 
+           height = dev.size("in")[2], 
+           units = "in", 
+           dpi = 600)
+    
   }
   
 }
