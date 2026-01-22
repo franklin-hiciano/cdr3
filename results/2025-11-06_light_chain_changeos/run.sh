@@ -42,6 +42,7 @@ done
 }
 
 function count_clones {
+	# should be named: count_unique_clones_by_sample. also used the word 'distinct' when it should be 'unique'
   	module load R
 	mkdir -p "${RESULTS}/R/count_clones/"
 	mkdir -p "${RESULTS}/R/count_clones/logs"
@@ -68,8 +69,9 @@ do
 	done
 done
 }
-# this function is being deprecated because we're moving to per-sample counts to display a stacked bar plot
+
 function sum_clones {
+	# poorly named: sum_unique_clones_across_all_samples_by_loci
 	printf "sample_id\tunique_clones" 
 	for locus in IGK IGL
 do
@@ -86,7 +88,28 @@ do
 done
 }
 
+# changed our approach from this one.
+function sum_all_clones {
+		# should be named: count_all_clones_across_files_by_loci
+        printf "sample_id\tunique_clones"
+        for locus in IGK IGL
+do
+        clone_counts_tables=()
+        for SHM_status in mutated unmutated
+        do
+                for functional in productive unproductive
+                do
+                        clone_counts_tables+=("${RESULTS}/R/count_all_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv")
+                done
+        done
+        printf "sample_id\tunique_clones\n" > "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
+	awk 'FNR > 1 {count=$1; sum+=count; print("HI")} END{print sum} ' "${clone_counts_tables[@]}" | sort -k1,1 >> "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
+done
+}
+
+
 function count_all_clones {
+		# should be named: count_all_B_cells_by_file
         module load R
         mkdir -p "${RESULTS}/R/count_all_clones/"
         mkdir -p "${RESULTS}/R/count_all_clones/logs"
@@ -115,6 +138,7 @@ done
 }
 
 function count_all_clones_per_sample {
+		# should be named: count_all_B_cells_by_sample
         module load R
         mkdir -p "${RESULTS}/R/count_all_clones_per_sample/"
         mkdir -p "${RESULTS}/R/count_all_clones_per_sample/logs"
@@ -141,25 +165,6 @@ do
         done
 done
 }
-
-# this function is deprecated because we're moving to counting each sample individually and putting them in a stacked barplot.
-function sum_all_clones {
-        printf "sample_id\tunique_clones"
-        for locus in IGK IGL
-do
-        clone_counts_tables=()
-        for SHM_status in mutated unmutated
-        do
-                for functional in productive unproductive
-                do
-                        clone_counts_tables+=("${RESULTS}/R/count_all_clones/clone_counts_${locus}_${SHM_status}_${functional}.tsv")
-                done
-        done
-        printf "sample_id\tunique_clones\n" > "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
-	awk 'FNR > 1 {count=$1; sum+=count; print("HI")} END{print sum} ' "${clone_counts_tables[@]}" | sort -k1,1 >> "${RESULTS}/R/count_all_clones/summed_clone_counts_${locus}.tsv"
-done
-}
-
 
 #changeo_subset
 #process_changeo
