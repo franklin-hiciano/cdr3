@@ -68,7 +68,7 @@ do
 	done
 done
 }
-
+# this function is being deprecated because we're moving to per-sample counts to display a stacked bar plot
 function sum_clones {
 	printf "sample_id\tunique_clones" 
 	for locus in IGK IGL
@@ -114,6 +114,35 @@ do
 done
 }
 
+function count_all_clones_per_sample {
+        module load R
+        mkdir -p "${RESULTS}/R/count_all_clones_per_sample/"
+        mkdir -p "${RESULTS}/R/count_all_clones_per_sample/logs"
+        for locus in IGK IGL
+do
+        for SHM_status in mutated unmutated
+        do
+                for functional in productive unproductive
+                do
+
+                        job_name="count_all_clones_per_sample${locus}_${SHM_status}_${functional}"
+                        bsub \
+                                -P acc_oscarlr \
+                                -q express \
+                                -W 01:00 \
+                                -n 1 \
+                                -J "${job_name}" \
+                                -R "span[hosts=1]" \
+                                -R "rusage[mem=16000]" \
+                                -o "${RESULTS}/R/count_all_clones_per_sample/logs/${job_name}.out" \
+                                -e "${RESULTS}/R/count_all_clones_per_sample/logs/${job_name}.err" \
+                                "module load R; Rscript ${RESULTS}/R/count_clones.R all_per_sample ${DATA}/changeo/${locus}/master_changeo_${SHM_status}_500_seqs_filtered_${functional}.tsv ${RESULTS}/R/count_all_clones_per_sample/clone_counts_${locus}_${SHM_status}_${functional}.tsv"
+                done
+        done
+done
+}
+
+# this function is deprecated because we're moving to counting each sample individually and putting them in a stacked barplot.
 function sum_all_clones {
         printf "sample_id\tunique_clones"
         for locus in IGK IGL
@@ -137,6 +166,6 @@ done
 #validate_process_changeo_results_using_bash
 #count_clones
 #sum_clones
-
+count_all_clones_per_sample
 #count_all_clones
 #sum_all_clones

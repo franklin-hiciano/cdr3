@@ -1,0 +1,137 @@
+Sender: LSF System <lsfadmin@lc07e45>
+Subject: Job 226161893: <count_all_clones_per_sampleIGK_unmutated_productive> in cluster <chimera> Exited
+
+Job <count_all_clones_per_sampleIGK_unmutated_productive> was submitted from host <li04e03> by user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:30:17 2026
+Job was executed on host(s) <lc07e45>, in queue <express>, as user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:30:20 2026
+</hpc/users/hiciaf01> was used as the home directory.
+</sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos> was used as the working directory.
+Started at Wed Jan 21 21:30:20 2026
+Terminated at Wed Jan 21 21:30:22 2026
+Results reported at Wed Jan 21 21:30:22 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+module load R; Rscript /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_clones.R all_per_sample /sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos//changeo/IGK/master_changeo_unmutated_500_seqs_filtered_productive.tsv /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/clone_counts_IGK_unmutated_productive.tsv
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.43 sec.
+    Max Memory :                                 11 MB
+    Average Memory :                             11.00 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               15989.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                4
+    Run time :                                   2 sec.
+    Turnaround time :                            5 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file </sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/logs/count_all_clones_per_sampleIGK_unmutated_productive.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@lh06c20>
+Subject: Job 226161904: <count_all_clones_per_sampleIGK_unmutated_productive> in cluster <chimera> Exited
+
+Job <count_all_clones_per_sampleIGK_unmutated_productive> was submitted from host <li04e03> by user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:35:12 2026
+Job was executed on host(s) <lh06c20>, in queue <express>, as user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:35:15 2026
+</hpc/users/hiciaf01> was used as the home directory.
+</sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos> was used as the working directory.
+Started at Wed Jan 21 21:35:15 2026
+Terminated at Wed Jan 21 21:35:16 2026
+Results reported at Wed Jan 21 21:35:16 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+module load R; Rscript /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_clones.R all_per_sample /sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos//changeo/IGK/master_changeo_unmutated_500_seqs_filtered_productive.tsv /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/clone_counts_IGK_unmutated_productive.tsv
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.62 sec.
+    Max Memory :                                 11 MB
+    Average Memory :                             11.00 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               15989.00 MB
+    Max Swap :                                   -
+    Max Processes :                              3
+    Max Threads :                                4
+    Run time :                                   1 sec.
+    Turnaround time :                            4 sec.
+
+The output (if any) follows:
+
+
+
+PS:
+
+Read file </sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/logs/count_all_clones_per_sampleIGK_unmutated_productive.err> for stderr output of this job.
+
+Sender: LSF System <lsfadmin@lh06c20>
+Subject: Job 226161913: <count_all_clones_per_sampleIGK_unmutated_productive> in cluster <chimera> Done
+
+Job <count_all_clones_per_sampleIGK_unmutated_productive> was submitted from host <li04e03> by user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:36:20 2026
+Job was executed on host(s) <lh06c20>, in queue <express>, as user <hiciaf01> in cluster <chimera> at Wed Jan 21 21:36:25 2026
+</hpc/users/hiciaf01> was used as the home directory.
+</sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos> was used as the working directory.
+Started at Wed Jan 21 21:36:25 2026
+Terminated at Wed Jan 21 21:38:09 2026
+Results reported at Wed Jan 21 21:38:09 2026
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+module load R; Rscript /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_clones.R all_per_sample /sc/arion/scratch/hiciaf01/projects/cdr3/data/2025-11-06_light_chain_changeos//changeo/IGK/master_changeo_unmutated_500_seqs_filtered_productive.tsv /sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/clone_counts_IGK_unmutated_productive.tsv
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   103.92 sec.
+    Max Memory :                                 3269 MB
+    Average Memory :                             1457.72 MB
+    Total Requested Memory :                     16000.00 MB
+    Delta Memory :                               12731.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   104 sec.
+    Turnaround time :                            109 sec.
+
+The output (if any) follows:
+
+# A tibble: 169 × 2
+   sample_id total_clones
+   <chr>            <int>
+ 1 110040277         7679
+ 2 110040811         6804
+ 3 110040851        10862
+ 4 110040887         4201
+ 5 110040958         3448
+ 6 110040975         3229
+ 7 110042592         7640
+ 8 110042606         8537
+ 9 110042713         6364
+10 110042813        15716
+# ℹ 159 more rows
+
+
+PS:
+
+Read file </sc/arion/work/hiciaf01/projects/cdr3/results/2025-11-06_light_chain_changeos//R/count_all_clones_per_sample/logs/count_all_clones_per_sampleIGK_unmutated_productive.err> for stderr output of this job.
+

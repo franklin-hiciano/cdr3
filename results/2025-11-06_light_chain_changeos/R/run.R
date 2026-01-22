@@ -98,7 +98,7 @@ get_means_of_clone_counts <- function() {
   write.table(clone_count_means, file.path(RESULTS, "R/count_clones/", "summed_clone_count_means.tsv"), sep = "\t", quote = FALSE, row.names = FALSE)
 }
 
-plot_all_sequence_counts <- function() {
+plot_number_of_distinct_clones_per_sample <- function() {
   for (locus in c("IGK", "IGL")) {
     all_counts <- data.frame()
     for (SHM_status in c("mutated", "unmutated")) {
@@ -127,7 +127,7 @@ plot_all_sequence_counts <- function() {
             axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
       labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
     print(p)
-    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_all_sequence_counts/plot_distinct_clones_", locus, "_stacked_plot_unsorted", ".png")), 
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_distinct_clones_per_sample/plot_number_of_distinct_clones_per_sample_", locus, "_stacked_plot_unsorted", ".png")), 
            plot = p, 
            width = dev.size("in")[1], 
            height = dev.size("in")[2], 
@@ -159,4 +159,68 @@ plot_all_sequence_counts <- function() {
   }
   
 }
-plot_all_sequence_counts()
+plot_number_of_distinct_clones_per_sample()
+
+
+plot_number_of_B_cells_per_sample <- function() {
+  for (locus in c("IGK", "IGL")) {
+    all_counts <- data.frame()
+    for (SHM_status in c("mutated", "unmutated")) {
+      for (functional in c("productive", "unproductive")) {
+        file <- read.table(file.path(RESULTS, paste0("R/count_all_clones_per_sample/clone_counts_", locus, "_", SHM_status, "_", functional, ".tsv")), sep = "\t", header = TRUE, stringsAsFactors = FALSE, quote = "", comment.char = "")
+        v <- as.numeric(unlist(file))
+        print(file$sample_id)
+        
+        all_counts <- rbind(all_counts, data.frame(
+          file = rep(paste(SHM_status, functional), times=length(ncol(file))),
+          sample_id = unlist(file$sample_id),
+          unique_clones = file$unique_clones
+        ))
+      }
+    }
+    all_counts_unsorted <- all_counts %>%
+      group_by(sample_id) %>%
+      mutate(total_clones = sum(unique_clones)) %>%
+      ungroup() %>%
+      mutate(sample_id = factor(sample_id, levels = unique(all_counts$sample_id)))
+    
+    p <- ggplot(all_counts_unsorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
+      geom_bar(position="stack", stat="identity") +
+      theme_minimal() +
+      theme(legend.position = "top", legend.justification = "right",
+            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
+      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
+    print(p)
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_B_cells_per_sample/plot_number_of_B_cells_per_sample_", locus, "_stacked_plot_unsorted", ".png")), 
+           plot = p, 
+           width = dev.size("in")[1], 
+           height = dev.size("in")[2], 
+           units = "in", 
+           dpi = 600)
+    
+    
+    all_counts_sorted <- all_counts %>%
+      group_by(sample_id) %>%
+      mutate(total_clones = sum(unique_clones)) %>%
+      ungroup() %>%
+      arrange(total_clones) %>%
+      mutate(sample_id = factor(sample_id, levels = unique(sample_id)))
+    
+    p <- ggplot(all_counts_sorted, aes(fill=file, y=unique_clones, x=sample_id)) + 
+      geom_bar(position="stack", stat="identity") +
+      theme_minimal() +
+      theme(legend.position = "top", legend.justification = "right",
+            axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6)) +
+      labs(title = paste0("Number of unique clones per ", locus, " sample"), x="Sample", y="Number of unique clones")
+    print(p)
+    ggsave(filename = file.path(RESULTS, paste0("R/plots/plot_number_of_B_cells_per_sample/plot_number_of_B_cells_per_sample_", locus, "_stacked_plot_sorted", ".png")), 
+           plot = p, 
+           width = dev.size("in")[1], 
+           height = dev.size("in")[2], 
+           units = "in", 
+           dpi = 600)
+    
+  }
+  
+}
+plot_number_of_B_cells_per_sample()
